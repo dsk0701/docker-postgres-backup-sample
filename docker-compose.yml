@@ -1,0 +1,20 @@
+sonarqube:
+  image: orangesignal/sonar:4.5.4
+  links: 
+    - postgres:database
+  ports: 
+    - 9000:9000
+  environment:
+    - SONAR_JDBC_URL=jdbc:postgresql://database:5432/sonar_test
+    - SONAR_JDBC_USERNAME=sonar_test
+    - SONAR_JDBC_PASSWORD=sonar_test
+
+postgres:
+  image: postgres:9.3
+  ports:
+    - 5432:5432
+  environment:
+    - POSTGRES_DB=sonar_test
+    - POSTGRES_USER=sonar_test
+    - POSTGRES_PASSWORD=sonar_test
+
