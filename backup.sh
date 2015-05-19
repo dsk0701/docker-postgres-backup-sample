@@ -6,7 +6,7 @@ BACKUP_FILE_NAME=`date +"%Y%m%d_%H%M"`
 HOST_BACKUP_DIR="$(pwd)/backup"
 
 DB_SERVICE_NAME="postgres"
-DB_CONTAINER_NAME=`docker-compose ps | grep ${DB_SERVICE_NAME} | awk '{print $1}'`
+DB_CONTAINER_NAME=`docker-compose ps | grep _${DB_SERVICE_NAME} | awk '{print $1}'`
 
 # コンテナを停止します。
 echo "Stopping containers..."

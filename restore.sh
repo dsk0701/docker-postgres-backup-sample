@@ -1,24 +1,22 @@
-#!/bin/bash
+#! /bin/bash -e
 
-RESTORE_DIR=/restore
-
-# リストア用アーカイブファイルがなかったら何もしない
-if [ ! -f ${RESTORE_DIR}/backup-* ];then
-    echo "No restore file."
-    return 0
+# パラメータチェック
+if [ -z $1 ] ; then
+    echo "usage: $0 [backup-archive.tar.gz]"
+    exit
 fi
 
-LATEST_RESTORE_FILE=`ls -lt ${RESTORE_DIR}/backup-* | head -n 1 | awk '{print $9}' | xargs basename`
-: ${RESTORE_FILE_NAME:=${LATEST_RESTORE_FILE}}
+SHELL_DIR="${0%/*}"
+RESTORE_ARCHIVE_FILE=$1
+HOST_RESTORE_DIR="${SHELL_DIR}/restore"
 
-echo "Start the restore."
+mkdir -p ${HOST_RESTORE_DIR}
 
-echo "Clean up data directory."
-rm -rf ${PGDATA}/*
+echo "cp ${RESTORE_ARCHIVE_FILE} restore/."
+cp ${RESTORE_ARCHIVE_FILE} restore/.
 
-echo "Restore data."
-tar zxvf ${RESTORE_DIR}/${RESTORE_FILE_NAME} && \
-mv ${RESTORE_DIR}/${RESTORE_FILE_NAME} ${RESTORE_DIR}/restored_${RESTORE_FILE_NAME}
-
-echo "Finish the restore."
+# コンテナを捨ててクリーンな状態に立ち上げる
+docker-compose stop
+docker-compose rm --force
+docker-compose up -d
 

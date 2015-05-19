@@ -10,7 +10,9 @@ sonarqube:
     - SONAR_JDBC_PASSWORD=sonar_test
 
 postgres:
-  image: postgres:9.3
+  build: docker-postgres
+  volumes:
+    - restore:/restore
   ports:
     - 5432:5432
   environment:

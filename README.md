@@ -17,7 +17,14 @@ Restore
     $ cd /path/to/project
     $ mkdir -p restore
     $ cp backup/backup-{date you want to restore}.tar.gz restore/.
+    $ docker-compose stop
+    $ docker-compose rm --force
     $ docker-compose up -d
+
+          or
+
+    $ cd /path/to/project
+    $ ./restore.sh backup/backup-{date you want to restore}.tar.gz
 
 Checking result
 
