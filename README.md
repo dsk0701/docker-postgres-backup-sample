@@ -1,5 +1,13 @@
 # docker-postgres-backup-sample
 
+## Build
+
+    $ docker-compose build
+
+## Run
+
+    $ docker-compose up -d
+
 ## Testing
 
 Data Posting
